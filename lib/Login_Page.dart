@@ -1,14 +1,15 @@
 import 'package:aasignupapp/Register_page.dart';
+import 'package:aasignupapp/_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
   TextEditingController username, password;
-
+Details details;
   @override
   void initState() {
     username = TextEditingController();
@@ -138,7 +139,7 @@ class LoginPageState extends State<LoginPage> {
   void _gotoregister() async{
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Register()),
+      MaterialPageRoute(builder: (context) => Register(this.details)),
     );
 
   }

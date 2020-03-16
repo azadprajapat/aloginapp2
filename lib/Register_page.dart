@@ -1,19 +1,31 @@
 import 'package:aasignupapp/Login_Page.dart';
+import 'package:aasignupapp/_details.dart';
+import 'package:aasignupapp/userHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
+  final Details details;
+  Register(this.details);
+
   RegisterState createState() => RegisterState();
 }
 
 class RegisterState extends State<Register> {
+  Details details;
   TextEditingController _mobile;
   TextEditingController _email;
+  TextEditingController _username;
+  TextEditingController _password;
 
   void initState() {
+
     _mobile = TextEditingController();
     _email = TextEditingController();
+    _username = TextEditingController();
+    _password = TextEditingController();
     super.initState();
+
   }
 
   @override
@@ -30,7 +42,7 @@ class RegisterState extends State<Register> {
               padding: EdgeInsets.all(5.0),
               child: TextFormField(
                 style: TextStyle(fontSize: 15.0),
-                controller: LoginPageState().username,
+                controller:  _username,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'username',
@@ -69,7 +81,7 @@ class RegisterState extends State<Register> {
               padding: EdgeInsets.all(5.0),
               child: TextFormField(
                 style: TextStyle(fontSize: 15.0),
-                controller: LoginPageState().password,
+                controller: _password,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -123,7 +135,15 @@ class RegisterState extends State<Register> {
                         borderRadius: new BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.red),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                          if (widget.details == null) {
+                            details = Details(_mobile.text, _username.text, _email.text,_password.text );
+                          } else {
+                            details = Details.withId(widget.details.mobile,  _username.text, _email.text,_password.text);
+                          }
+                          GotoHome(details);
+
+                      },
                     ),
                   ),
                 ),
@@ -134,4 +154,13 @@ class RegisterState extends State<Register> {
       ),
     );
   }
+  void GotoHome( Details details) async{
+
+      var result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home(this.details)),
+      );
+
+
+}
 }

@@ -1,5 +1,5 @@
 class Details {
-  int _mobile;
+  String _mobile;
   String _username;
   String _email;
   String _password;
@@ -7,7 +7,7 @@ class Details {
   Details(this._mobile, this._username, this._email, this._password);
   Details.withId(this._mobile, this._username, this._email, this._password);
 
-  int get mobile => _mobile;
+  String get mobile => _mobile;
   String get username => _username;
   String get email => _email;
    String get password=> _password;
@@ -37,7 +37,6 @@ class Details {
     return map;
   }
 
-  // Extract a Note Object from a Map Object
   Details.fromMapObject( Map<String, dynamic> map ) {
     this._username = map['username'];
     this._mobile = map['mobile'];
