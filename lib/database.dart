@@ -8,7 +8,8 @@ class DatabaseHelper {
 
   static DatabaseHelper _databaseHelper; // Singleton DatabaseHelper (only once in whole app)
   static Database _database;
-  String DetailTable = 'detail_table';
+  String detailTable = 'detail_table';
+  String ColId='id';
   String Colusername = 'username';
   String Colemail = 'email';
   String Colmobile = 'mobile';
@@ -45,15 +46,38 @@ class DatabaseHelper {
   }
 
   void _createDb(Database db, int newV) async {
-    await db.execute('CREATE TABLE $DetailTable($Colusername TEXT PRIMARY KEY, $Colemail TEXT, '
+    await db.execute('CREATE TABLE $detailTable($ColId INTEGER PRIMARY KEY AUTOINCREMENT ,  $Colusername TEXT , $Colemail TEXT, '
         '$Colmobile INTEGER, $Colpassword TEXT, )');
   }
 
   // Insert operation :
   Future<int> insertDetail(Details details) async {
     Database db = await this.database;
-    var result = await db.insert(DetailTable, Details.toMap());
+      var result = await db.insert(detailTable, details.toMap());
+      return result;
+
+  }
+  Future<List<Map<String, dynamic>>> getDetailMapList() async {
+    Database db = await this.database;
+
+//		var result = await db.rawQuery('SELECT * FROM $noteTable order by $colPriority ASC');
+    var result = await db.query(detailTable, orderBy: '$ColId ASC ');
     return result;
   }
+  Future<List<Details>> getDetailList() async {
+
+    var detailMapList = await getDetailMapList(); // Get 'Map List' from database
+    int count = detailMapList.length;         // Count the number of map entries in db table
+
+    List<Details> detailList = List<Details>();
+    // For loop to create a 'Note List' from a 'Map List'
+    for (int i = 0; i < count; i++) {
+      detailList.add(Details.fromMapObject(detailMapList[i]));
+    }
+
+    return detailList;
+  }
+
+
 
 }

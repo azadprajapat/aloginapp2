@@ -1,4 +1,6 @@
 import 'package:aasignupapp/Register_page.dart';
+import 'package:aasignupapp/_details.dart';
+import 'package:aasignupapp/userHome.dart';
 import 'package:flutter/material.dart';
 import 'package:aasignupapp/Login_Page.dart';
 
